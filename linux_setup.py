@@ -1,9 +1,9 @@
 from cx_Freeze import setup, Executable
 
-build_exe_options = {"packages" : ["vlc", "tkinter"]}
+build_exe_options = {"packages" : ["vlc", "tkinter", "json", "requests", "time"]}
 
 setup(  name = "Radio",
-        version = "0.0.1",
+        version = "0.1.1",
         description = "Online radio GUI",
         options = {"build_exe": build_exe_options},
         executables = [Executable("radio.py", base=None)])
