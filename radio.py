@@ -94,7 +94,7 @@ def create_Button(string, color, y, x, var1, w=BUTTON_VAL[0], h=BUTTON_VAL[1]):
 	return tkinter.Button(text = string, fg = color, width = w, height = h, command=lambda: button_Handler(string, var1)).grid(row = y, column = x)
 
 def init_button_values():
-	if (sys.platform == "linux")
+	if (sys.platform == "linux"):
 		BUTTON_VAL[0] = 10
 		BUTTON_VAL[1] = 5
 
