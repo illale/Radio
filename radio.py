@@ -2,7 +2,7 @@ import vlc
 import tkinter
 import requests as req
 import json
-import time
+import time, sys
 from tkinter import font
 
 SONGURLS = {
@@ -36,6 +36,7 @@ CHANNELS = {
 CHANNEL_URL = CHANNELS["YLEX"]
 PLAY = [True]
 CURRENT_CHAN = "YLEX"
+BUTTON_VAL = [14, 6]
 
 def get_song_info(name):
 	if (name == "PUHE"):
@@ -89,8 +90,13 @@ def init_Frames(window):
 	bot_frame = tkinter.Frame(window)
 	return top_frame, bot_frame
 
-def create_Button(string, color, y, x, var1, w=14, h=6):
+def create_Button(string, color, y, x, var1, w=BUTTON_VAL[0], h=BUTTON_VAL[1]):
 	return tkinter.Button(text = string, fg = color, width = w, height = h, command=lambda: button_Handler(string, var1)).grid(row = y, column = x)
+
+def init_button_values():
+	if (sys.platform == "linux")
+		BUTTON_VAL[0] = 10
+		BUTTON_VAL[1] = 5
 
 def main(var):
 	quit = False
