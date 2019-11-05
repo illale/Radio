@@ -17,7 +17,8 @@ SONGURLS = {
 	"RADIO-AALTO": "https://supla-playlist.nm-services.nelonenmedia.fi/playlist?channel=51&next_token=&limit=20",
 	"HIT-MIX": "https://supla-playlist.nm-services.nelonenmedia.fi/playlist?channel=55&next_token=&limit=20",
 	"HELMI-RADIO": "https://supla-playlist.nm-services.nelonenmedia.fi/playlist?channel=57&next_token=&limit=20",
-	"GROOVE": "https://supla-playlist.nm-services.nelonenmedia.fi/playlist?channel=70&next_token=&limit=20"
+	"GROOVE": "https://supla-playlist.nm-services.nelonenmedia.fi/playlist?channel=70&next_token=&limit=20",
+    "BASSO-RADIO": "http://api.basso.fi/v1/now_playing.json?c=1"
 }
 
 CHANNELS = {

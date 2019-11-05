@@ -25,6 +25,6 @@ for i in range(len(segments)):
     audio_data.append(audio.content)
 
 
-with open("music.mp3", "wb") as target:
+with open("music.aac", "wb") as target:
     for obj in audio_data:
         target.write(obj)
