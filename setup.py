@@ -7,11 +7,11 @@ build_exe_options = {"packages": ["vlc", "tkinter", "json", "requests", "time", 
 # GUI applications require a different base on Windows (the default is for a
 # console application).
 base = None
-if sys.platform == "linux":
+if sys.platform == "win32":
     base = "Win32GUI"
 
-setup(  name = "Radio",
-        version = "0.0.1",
+setup(  name = "Padio",
+        version = "0.1.0",
         description = "Online radio GUI",
         options = {"build_exe": build_exe_options},
         executables = [Executable("radio.py", base=base)])

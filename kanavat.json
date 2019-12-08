@@ -1,0 +1,11 @@
+{
+	"YLEX": "https://yleuni-f.akamaihd.net/i/yleliveradiohd_2@113879/index_64_a-p.m3u8?sd=10&rebase=on",
+	"NOVA": "http://stream.bauermedia.fi/radionova/radionova_64.aac",
+	"SUOMI-ROCK": "http://stream.bauermedia.fi/suomirock/suomirock_64.aac",
+	"NRJ": "http://cdn.nrjaudio.fm/adwz1/fi/35001/mp3_128.mp3",
+	"ISKELMÄ": "http://stream.bauermedia.fi/iskelma/iskelma_64.aac",
+	"PUHE": "https://yleuni-f.akamaihd.net/i/yleliveradiohd_5@113882/index_128_a-p.m3u8?sd=10&rebase=on",
+	"HELMI-RADIO": "https://digitacdn.akamaized.net/hls/live/629243/radiohelmi/master-128000.m3u8",
+	"RADIO ROCK": "https://digitacdn.akamaized.net/hls/live/629243/radiorock/master.m3u8",
+	"SUOMI-POP": "https://digitacdn.akamaized.net/hls/live/629243/radiosuomipop/master-128000.m3u8"
+}

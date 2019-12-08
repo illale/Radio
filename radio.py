@@ -32,21 +32,44 @@ CHANNELS = {
 	"SUOMI-POP": "https://digitacdn.akamaized.net/hls/live/629243/radiosuomipop/master-128000.m3u8"
 }
 
+CHANNELS_LIST = ["NOVA", "YLEX", "SUOMI-ROCK", "PUHE", "NRJ", "ISKELMÄ", "HELMI-RADIO", "RADIO ROCK", "SUOMI-POP"]
+
 
 CHANNEL_URL = CHANNELS["YLEX"]
 PLAY = [True]
 CURRENT_CHAN = "YLEX"
 BUTTON_VAL = [14, 6]
+PRESSED = False
+
+def init_radio():
+	"""
+	This function opens up the corresponding json files for SONG INFO
+	and CHANNEL URLS.
+	The function return two dictionaries called CHANNELS and SONGURLS
+	which contain the needed urls for this webradio to work.
+	"""
+	with open("kanavat.json") as channel_source:
+		CHANNELS = json.load(channel_source)
+
+	with open("kappaleet.json") as song_source:
+		SONGURLS = json.load(song_source)
+
+	return CHANNELS, SONGURLS
 
 def get_song_info(name):
+	"""
+	Requests data from url that is the SONGURL of the currently playing channel.
+	Using requests library we make requst to the website, and after we get the
+	response, we parse the data to get the currently playing song.
+	"""
 	if (name == "PUHE"):
 		return "SONG INFO NOT AVAILABLE"
-	url = SONGURLS[name]
-	data = req.get(url)
-	f = data.text
-	jonne = f.split(",")
-	song_info = json.loads(f)
-	if len(jonne) > 2:
+	song_url = SONGURLS[name]
+	song_data = req.get(song_url)
+	song_text = song_data.text
+	parsed_text = song_text.split(",")
+	song_info = json.loads(song_text)
+	if len(parsed_text) > 2:
 		if name == "YLEX":
 			text =  name + "\n" + song_info["data"]["performer"] + ": " + song_info["data"]["title"]
 			return text
@@ -62,7 +85,38 @@ def get_song_info(name):
 		else:
 			return name + "\n" + "SONG TITLE NOT AVAILABLE"
 
+def key_handler(event):
+	"""
+	This function gets the keypress event, and handles it. Depending on the key
+	the handler will select channel with keys 1-9 and play/stop with spacebar.
+	Also closing with escape key.
+	"""
+	global PRESSED
+	if event.char in ("1", "2", "3", "4", "5", "6", "7", "8", "9"):
+		print(repr(event.char))
+		global CHANNEL_URL, CURRENT_CHAN, SONG
+		CURRENT_CHAN = CHANNELS_LIST[int(event.char) - 1]
+		CHANNEL_URL = CHANNELS[CURRENT_CHAN]
+		PLAY[0] = False
+		SONG.set(get_song_info(CURRENT_CHAN))
+	elif event.char == " ":
+		if not PRESSED:
+			Player.stop()
+			PRESSED = True
+		elif PRESSED:
+			Player.play()
+			PRESSED = False
+	else:
+		print("This key is not supported ", event.char)
+
+def exit(event):
+	window.destroy()
+
 def init_Window(title_name="Radio"):
+	"""
+	Creates tkinter window object, sets it size to 320x480 and sets the title
+	for the program and makes the window not resizable.
+	"""
 	window = tkinter.Tk()
 	window.title(title_name)
 	window.geometry("320x480")
@@ -90,8 +144,8 @@ def init_Frames(window):
 	bot_frame = tkinter.Frame(window)
 	return top_frame, bot_frame
 
-def create_Button(string, color, y, x, var1, w=BUTTON_VAL[0], h=BUTTON_VAL[1]):
-	return tkinter.Button(text = string, fg = color, width = w, height = h, command=lambda: button_Handler(string, var1)).grid(row = y, column = x)
+def create_Button(string, color, y, x, var1, w=BUTTON_VAL[0], h=BUTTON_VAL[1], image=None):
+	return tkinter.Button(text = string, fg = color, width = w, height = h, image = image, command=lambda: button_Handler(string, var1)).grid(row = y, column = x)
 
 def init_button_values():
 	if (sys.platform == "linux"):
@@ -132,16 +186,11 @@ def thread_Func(var, chan):
 
 if __name__ == "__main__":
 	window = init_Window()
-	#canvas = tkinter.Frame(window, relief="sunken",height = 140, width = 300, bg="black")
+	global SONG
 	SONG = tkinter.StringVar()
-	myfont = font.Font(family="Helvetica", size=16, weight="bold")
+	myfont = font.Font(family="digital-7", size=18, weight="bold")
 	label3 = tkinter.Label(window, textvariable=SONG, height=6, width=20, font=myfont, bg="black", fg="green", wraplength=200).grid(row=0, column=0, columnspan=3)
-	#NAME.set("YLEX")
 	SONG.set(get_song_info("YLEX"))
-	#for i in range(0,3):
-	#	canvas.grid_columnconfigure(i, minsize=100)
-	#	canvas.grid_rowconfigure(i, minsize=50)
-	#canvas.grid(row = 0, columnspan = 3, pady=8, padx=8)
 	button1 = create_Button("NOVA", "black", 3, 0, SONG)
 	button2 = create_Button("YLEX", "black", 3, 1, SONG)
 	button3 = create_Button("SUOMI-ROCK", "black", 3, 2, SONG)
@@ -151,6 +200,9 @@ if __name__ == "__main__":
 	button7 = create_Button("HELMI-RADIO", "black", 5, 0, SONG)
 	button8 = create_Button("RADIO ROCK", "black", 5, 1, SONG)
 	button9 = create_Button("SUOMI-POP", "black", 5, 2, SONG)
+	image_play = tkinter.PhotoImage(file="source/play.png")
 	button10 = create_Button("I>", "black", 1, 0, SONG, w=2, h=1)
 	button11 = create_Button("||", "black", 1, 2, SONG, w=2, h=1)
+	window.bind("<Key>", key_handler)
+	window.bind("<Escape>", exit)
 	main(SONG)
