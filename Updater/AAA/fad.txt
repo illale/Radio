@@ -1,0 +1,18 @@
+PyRadio was created in the autum of 2019, when my father came up
+with the idea for an online radio GUI meant to be used on Raspberry PI.
+Source code
+
+The source code is available in github
+Github link
+Version
+
+The version number of the software looks like this x.y.z.
+If Z has grown in value by some number, that means that
+there has been minor changes to the program. For example
+bug fixes, documentation and anothre minor changes are
+presented as the Z growing.
+
+The Y tells us that there has been some major changes, like new features
+changes in the look of the GUI, language options and support for other
+countries. the X tells us that there has been really big overhaul
+at the software. For example new GUI, and backend depencies being gone. 
