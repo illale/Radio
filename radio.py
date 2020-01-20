@@ -154,31 +154,31 @@ def init_button_values():
 		BUTTON_VAL[1] = 5
 
 def main(var):
-	quit = False
-	Instance = vlc.Instance("--input-repeat=-1", "--fullscreen")
-	global Player
-	Player = Instance.media_player_new()
-	start = time.time()
-	while not quit:
-		Media = Instance.media_new(CHANNEL_URL)
-		Player.set_media(Media)
-		Player.play()
-		while True:
-			if ((time.time() - start) > 10):
-				thread_Func(var, CURRENT_CHAN)
-				start = time.time()
-			if (PLAY[0] == False):
-				Player.stop()
-				Media = Instance.media_new(CHANNEL_URL)
-				Player.set_media(Media)
-				Player.play()
-				PLAY[0] = True
-			try:
-				window.update_idletasks()
-				window.update()
-			except tkinter.TclError:
-				quit = True
-				break
+    quit = False
+    Instance = vlc.Instance("--input-repeat=-1", "--fullscreen")
+    global Player
+    Player = Instance.media_player_new()
+    start = time.time()
+    while not quit:
+        Media = Instance.media_new(CHANNEL_URL)
+        Player.set_media(Media)
+        Player.play()
+        while True:
+            if ((time.time() - start) > 10):
+                thread_Func(var, CURRENT_CHAN)
+                start = time.time()
+            if (PLAY[0] == False):
+                Player.stop()
+                Media = Instance.media_new(CHANNEL_URL)
+                Player.set_media(Media)
+                Player.play()
+                PLAY[0] = True
+            try:
+                window.update_idletasks()
+                window.update()
+            except tkinter.TclError:
+                quit = True
+                break
 
 def thread_Func(var, chan):
 	song = get_song_info(chan)
